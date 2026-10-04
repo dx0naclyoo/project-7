@@ -3,3 +3,9 @@ prod:
 
 dev:
 	uv run fastapi dev
+
+docker-run:
+	docker compose up
+
+build:
+	docker compose build
