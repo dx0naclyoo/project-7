@@ -1,0 +1,73 @@
+name: PR → Telegram
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-opened:
+    name: Новый PR
+    # черновики пропускаем; когда черновик переведут в ready — придёт уведомление
+    if: github.event_name == 'pull_request' && !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/telegram-action@v1.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_web_page_preview: true
+          message: |
+            🆕 Новый PR в ${{ github.repository }}
+            ${{ github.event.pull_request.title }}
+            Автор: ${{ github.event.pull_request.user.login }}
+            ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
+            Ревьюеры: ${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') || '—' }}
+            ${{ github.event.pull_request.html_url }}
+
+  pr-approved:
+    name: PR одобрен и готов к мёрджу
+    if: github.event_name == 'pull_request_review' && github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Проверить, что PR можно мёрджить
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          # mergeable GitHub считает асинхронно, поэтому несколько раз переспрашиваем
+          for i in 1 2 3 4 5 6; do
+            mergeable=$(gh pr view "$PR" --repo "$REPO" --json mergeable --jq .mergeable)
+            [ "$mergeable" != "UNKNOWN" ] && break
+            sleep 5
+          done
+
+          # reviewDecision учитывает правила защиты ветки: нужное число аппрувов
+          # и отсутствие "Request changes". Пустое значение значит, что ревью
+          # в репозитории не обязательно, и тогда хватает самого аппрува.
+          decision=$(gh pr view "$PR" --repo "$REPO" --json reviewDecision --jq .reviewDecision)
+
+          echo "mergeable=$mergeable, reviewDecision=${decision:-<не требуется>}"
+          if [ "$mergeable" = "MERGEABLE" ] && { [ "$decision" = "APPROVED" ] || [ -z "$decision" ]; }; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Отправить в Telegram
+        if: steps.check.outputs.ready == 'true'
+        uses: appleboy/telegram-action@v1.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_web_page_preview: true
+          message: |
+            ✅ PR одобрен и готов к мёрджу
+            ${{ github.event.pull_request.title }}
+            Одобрил: ${{ github.event.review.user.login }}
+            ${{ github.event.pull_request.html_url }}
