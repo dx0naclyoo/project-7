@@ -10,6 +10,10 @@ permissions:
   contents: read
   pull-requests: read
 
+env:
+  # кого тегать в Telegram, через пробел
+  TG_MENTIONS: "@niiiloll @dx0naclyoo"
+
 jobs:
   pr-opened:
     name: Новый PR
@@ -29,6 +33,8 @@ jobs:
             ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
             Ревьюеры: ${{ join(github.event.pull_request.requested_reviewers.*.login, ', ') || '—' }}
             ${{ github.event.pull_request.html_url }}
+
+            ${{ env.TG_MENTIONS }}
 
   pr-approved:
     name: PR одобрен и готов к мёрджу
@@ -71,3 +77,5 @@ jobs:
             ${{ github.event.pull_request.title }}
             Одобрил: ${{ github.event.review.user.login }}
             ${{ github.event.pull_request.html_url }}
+
+            ${{ env.TG_MENTIONS }}
