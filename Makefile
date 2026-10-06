@@ -10,7 +10,6 @@ docker-run:
 build:
 	docker compose build
 
-.PHONY: lint
 
 lint:
 	uv run ruff check .
