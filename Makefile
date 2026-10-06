@@ -9,3 +9,8 @@ docker-run:
 
 build:
 	docker compose build
+
+
+lint:
+	uv run ruff check .
+	uv run mypy .
