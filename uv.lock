@@ -796,6 +796,7 @@ source = { editable = "." }
 dependencies = [
     { name = "asyncpg" },
     { name = "fastapi", extra = ["standard"] },
+    { name = "python-dotenv" },
 ]
 
 [package.dev-dependencies]
@@ -808,6 +809,7 @@ dev = [
 requires-dist = [
     { name = "asyncpg", specifier = ">=0.32.0" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.142.2" },
+    { name = "python-dotenv", specifier = ">=1.2.4" },
 ]
 
 [package.metadata.requires-dev]

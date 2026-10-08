@@ -1,11 +1,16 @@
-from fastapi import FastAPI,Depends,HTTPException
-from pydantic import BaseModel, Field
-from enum import Enum
-app = FastAPI()
-from src.db import get_connection
 from decimal import Decimal
-import asyncpg
+from enum import Enum
+from typing import Annotated
 
+import asyncpg
+from fastapi import Depends, FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+from src.db import get_connection
+
+Connection = Annotated[asyncpg.Connection, Depends(get_connection)]
+
+app = FastAPI()
 
 class Gender(str, Enum):
     male = 'male'
@@ -31,7 +36,7 @@ class UserParametersResponse(BaseModel):
 @app.post("/users/parameters/", status_code=201, response_model=UserParametersResponse)
 async def create_parameters(
     data: UserParametersCreate,
-    conn: asyncpg.Connection = Depends(get_connection),
+    conn: Connection,
 ) -> UserParametersResponse:
     user = await conn.fetchrow("SELECT id FROM users WHERE id = $1", data.user_id)
     if user is None:
@@ -46,4 +51,6 @@ async def create_parameters(
         data.age,
         data.weight,
     )
+    if row is None:
+        raise HTTPException(status_code=500, detail="Failed to save parameters")
     return UserParametersResponse(**dict(row))
