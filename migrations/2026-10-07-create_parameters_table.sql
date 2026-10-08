@@ -5,3 +5,9 @@ CREATE TABLE IF NOT EXISTS parameters (
     age INTEGER NOT NULL,
     weight NUMERIC(5, 2) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS goals (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
+    goal_type VARCHAR(20) NOT NULL,
+    target_weight NUMERIC(5, 2) NOT NULL
+);
