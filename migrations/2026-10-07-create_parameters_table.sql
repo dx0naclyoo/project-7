@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS parameters (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    gender VARCHAR(10) NOT NULL,
+    age INTEGER NOT NULL,
+    weight NUMERIC(5, 2) NOT NULL
+);
