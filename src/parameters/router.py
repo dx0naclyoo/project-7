@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from src.db import Connection
 from src.parameters.schemas import UserParametersCreate, UserParametersResponse
 from src.parameters.service import ParametersService
+
 router = APIRouter(prefix="/users/parameters", tags=["parameters"])
 
 @router.post("/", status_code=201, response_model=UserParametersResponse)
