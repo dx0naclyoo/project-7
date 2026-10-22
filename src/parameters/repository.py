@@ -9,12 +9,13 @@ class ParametersRepository:
 
     async def create(self, data: UserParametersCreate) -> UserParametersResponse | None:
         row = await self.conn.fetchrow(
-            "INSERT INTO parameters (user_id, gender, age, weight) "
-            "VALUES ($1, $2, $3, $4) "
+            "INSERT INTO parameters (user_id, gender, age, weight, height) "
+            "VALUES ($1, $2, $3, $4, $5) "
             "RETURNING id, user_id, gender, age, weight",
             data.user_id,
             data.gender.value,
             data.age,
             data.weight,
+            data.height
         )
         return UserParametersResponse(**dict(row)) if row else None
