@@ -12,11 +12,11 @@ class Gender(str, Enum):
 class UserParametersCreate(BaseModel):
     user_id: int = Field(description="ID пользователя из таблицы users")
     gender: Gender = Field(description="Пол пользователя: male или female")
-    age: int = Field(gt=0, lt=60, description="Возраст пользователя")
+    age: int = Field(gt=0, lt=100, description="Возраст пользователя")
     weight: Decimal = Field(
         gt=0, le=150, max_digits=5, decimal_places=2, description="Вес пользователя в кг")
     height: int = Field(
-        gt = 140, le = 220, description="Рост в см"
+        gt = 100, le = 220, description="Рост в см"
     )
 
 
