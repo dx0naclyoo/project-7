@@ -10,9 +10,9 @@ class TrainingDaysRepository:
     async def set_days(self, data: TrainingDaysSet) -> TrainingDaysResponse | None:
         row = await self.conn.fetchrow(
             """
-            INSERT INTO training_settings (user_id, days)
-            VALUES ($1, $2)
-            ON CONFLICT (user_id) DO UPDATE SET days = EXCLUDED.days
+            UPDATE training_settings
+            SET days = $2
+            WHERE user_id = $1
             RETURNING user_id, days
             """,
             data.user_id,
