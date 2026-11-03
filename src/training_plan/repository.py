@@ -1,21 +1,8 @@
-import json
-
 import asyncpg
 
+from settings import PLAN_COLUMNS
+from src.training_plan.helpers import days_to_json, row_to_plan
 from src.training_plan.schemas import PlanDay, TrainingPlanResponse
-
-PLAN_COLUMNS = "id, user_id, level, goal_type, days, created_at"
-
-
-def _to_response(row: asyncpg.Record) -> TrainingPlanResponse:
-    data = dict(row)
-    # asyncpg отдаёт JSONB строкой
-    data["days"] = json.loads(data["days"])
-    return TrainingPlanResponse(**data)
-
-
-def _days_json(days: list[PlanDay]) -> str:
-    return json.dumps([day.model_dump() for day in days], ensure_ascii=False)
 
 
 class TrainingPlanRepository:
@@ -27,7 +14,7 @@ class TrainingPlanRepository:
             f"SELECT {PLAN_COLUMNS} FROM training_plans WHERE user_id = $1",
             user_id,
         )
-        return _to_response(row) if row else None
+        return row_to_plan(row) if row else None
 
     async def create_if_absent(
         self, user_id: int, level: str, goal_type: str | None, days: list[PlanDay]
@@ -41,9 +28,9 @@ class TrainingPlanRepository:
             user_id,
             level,
             goal_type,
-            _days_json(days),
+            days_to_json(days),
         )
-        return _to_response(row) if row else None
+        return row_to_plan(row) if row else None
 
     async def replace(
         self, user_id: int, level: str, goal_type: str | None, days: list[PlanDay]
@@ -58,6 +45,6 @@ class TrainingPlanRepository:
             user_id,
             level,
             goal_type,
-            _days_json(days),
+            days_to_json(days),
         )
-        return _to_response(row) if row else None
+        return row_to_plan(row) if row else None

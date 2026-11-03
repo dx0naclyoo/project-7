@@ -3,6 +3,9 @@
 # Колонки таблицы workouts, которые возвращают запросы репозитория
 WORKOUT_COLUMNS = "id, user_id, started_at, ended_at, calories"
 
+# Колонки таблицы training_plans, которые возвращают запросы репозитория
+PLAN_COLUMNS = "id, user_id, level, goal_type, days, created_at"
+
 # MET (метаболический эквивалент) по уровню тренировки
 MET_BY_LEVEL: dict[str, float] = {
     "beginner": 3.5,
@@ -85,10 +88,10 @@ LEVEL_VOLUME: dict[str, tuple[int, int, int]] = {
 }
 
 # цель: повторений в подходе (больше повторений на похудение, меньше на массу)
-REPS_BY_GOAL: dict[str | None, int] = {
+REPS_BY_GOAL: dict[str, int] = {
     "lose_weight": 15,
     "up_weight": 8,
-    None: 12,
 }
+DEFAULT_REPS = 12
 
 CARDIO_NAME = "Кардио: велотренажёр или быстрая ходьба"
