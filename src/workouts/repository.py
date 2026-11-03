@@ -2,9 +2,8 @@ from decimal import Decimal
 
 import asyncpg
 
+from settings import WORKOUT_COLUMNS
 from src.workouts.schemas import WorkoutResponse
-
-WORKOUT_COLUMNS = "id, user_id, started_at, ended_at, calories"
 
 
 class WorkoutRepository:

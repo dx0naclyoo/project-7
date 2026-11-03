@@ -3,18 +3,11 @@ from decimal import ROUND_HALF_UP, Decimal
 import asyncpg
 from fastapi import HTTPException
 
+from settings import DEFAULT_LEVEL, MET_BY_LEVEL
 from src.parameters.repository import ParametersRepository
 from src.users.repository import UserRepository
 from src.workouts.repository import WorkoutRepository
 from src.workouts.schemas import CaloriesResponse, WorkoutResponse
-
-# MET (метаболический эквивалент) по уровню тренировки
-MET_BY_LEVEL: dict[str, float] = {
-    "beginner": 3.5,
-    "intermediate": 5.0,
-    "hard": 8.0,
-}
-DEFAULT_LEVEL = "intermediate"
 
 
 class WorkoutService:
@@ -54,11 +47,11 @@ class WorkoutService:
         workout = await self.repo.get(workout_id)
         if workout is None:
             raise HTTPException(status_code=404, detail="Workout not found")
-        if workout.ended_at is None:
-            raise HTTPException(status_code=400, detail="Workout is not finished yet")
         return await self._calculate(workout)
 
     async def _calculate(self, workout: WorkoutResponse) -> CaloriesResponse:
+        if workout.ended_at is None:
+            raise HTTPException(status_code=400, detail="Workout is not finished yet")
         params = await self.parameters.get(workout.user_id)
         if params is None:
             raise HTTPException(
@@ -67,7 +60,6 @@ class WorkoutService:
         level = await self.repo.get_level(workout.user_id) or DEFAULT_LEVEL
         met = MET_BY_LEVEL.get(level, MET_BY_LEVEL[DEFAULT_LEVEL])
 
-        assert workout.ended_at is not None
         seconds = (workout.ended_at - workout.started_at).total_seconds()
         hours = Decimal(str(seconds)) / Decimal(3600)
 

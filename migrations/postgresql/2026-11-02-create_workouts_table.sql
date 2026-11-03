@@ -8,8 +8,6 @@ CREATE TABLE IF NOT EXISTS workouts (
     CONSTRAINT workouts_time_check CHECK (ended_at IS NULL OR ended_at >= started_at)
 );
 
-CREATE INDEX IF NOT EXISTS idx_workouts_user_id ON workouts(user_id);
-
 -- у пользователя может быть только одна незавершённая тренировка
 CREATE UNIQUE INDEX IF NOT EXISTS workouts_one_active_per_user
     ON workouts(user_id) WHERE ended_at IS NULL;
