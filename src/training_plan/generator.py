@@ -2,6 +2,7 @@ from settings import (
     CARDIO_NAME,
     DAY_NAMES,
     DEFAULT_LEVEL,
+    DEFAULT_REPS,
     EXERCISES,
     LEVEL_VOLUME,
     REPS_BY_GOAL,
@@ -14,7 +15,7 @@ def generate_plan(level: str, days: list[int], goal_type: str | None) -> list[Pl
     exercises_count, sets, cardio_minutes = LEVEL_VOLUME.get(
         level, LEVEL_VOLUME[DEFAULT_LEVEL]
     )
-    reps = REPS_BY_GOAL.get(goal_type, REPS_BY_GOAL[None])
+    reps = REPS_BY_GOAL.get(goal_type, DEFAULT_REPS) if goal_type else DEFAULT_REPS
     week_days = sorted(set(days))
     split = SPLITS[len(week_days)]
 

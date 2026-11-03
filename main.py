@@ -18,7 +18,3 @@ app.include_router(trainings_days_router)
 app.include_router(workouts_router)
 app.include_router(training_plan_router)
 
-
-@app.get("/")
-def abc() -> str:
-    return "make you the Best"
