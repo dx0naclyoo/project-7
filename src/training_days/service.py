@@ -16,7 +16,12 @@ class TrainingDaysService:
             raise HTTPException(status_code=404, detail="User not found")
         result = await self.repo.set_days(data)
         if result is None:
-            raise HTTPException(status_code=500, detail="Failed to save training days")
+            # дни меняются только у существующих настроек: без них неизвестен level
+            raise HTTPException(
+                status_code=404,
+                detail="Training settings not found, create them first "
+                "via POST /users/training-settings/",
+            )
         return result
 
     async def get_days(self, user_id: int) -> TrainingDaysResponse:
