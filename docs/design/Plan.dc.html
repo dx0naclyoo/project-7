@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>План на неделю</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:#F2F4F5}a:hover{color:#C8F04B}</style>
+</helmet>
+<div style="min-height:1000px;background:#111315;color:#F2F4F5;font-family:Manrope,system-ui,sans-serif">
+  <header style="max-width:1120px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+    <div style="font-family:Unbounded,Manrope,sans-serif;font-weight:700;font-size:16px">Сделай себя лучше</div>
+    <nav style="display:flex;gap:8px;font-weight:700;font-size:15px">
+      <a href="Today.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">Сегодня</a>
+      <a href="Plan.dc.html" style="padding:12px 16px;border-radius:12px;background:#262A2F;text-decoration:none">План</a>
+      <a href="Profile.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">Профиль</a>
+    </nav>
+  </header>
+  <main style="max-width:1120px;margin:0 auto;padding:16px 24px 48px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <div>
+        <h1 style="margin:0;font-family:Unbounded,Manrope,sans-serif;font-size:32px;font-weight:700">План на неделю</h1>
+        <p style="margin:8px 0 0;font-size:15px;color:#A3ABB3">Начальный уровень, цель: сбросить вес, 3 дня</p>
+      </div>
+      <button style="min-height:48px;padding:0 24px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Пересобрать план</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+      <section style="background:#1B1E22;border:2px solid #C8F04B;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:14px;font-weight:700;color:#C8F04B">Понедельник · сегодня</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Грудь, плечи, трицепс</h2>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px">
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Жим штанги лёжа</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Жим гантелей сидя</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Отжимания на брусьях</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Кардио: велотренажёр или быстрая ходьба</span><strong style="white-space:nowrap">15 мин</strong></li>
+        </ul>
+      </section>
+      <section style="background:#1B1E22;border:2px solid #1B1E22;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:14px;font-weight:700;color:#A3ABB3">Среда</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Спина и бицепс</h2>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px">
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Тяга верхнего блока</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Тяга штанги в наклоне</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Подтягивания</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Кардио: велотренажёр или быстрая ходьба</span><strong style="white-space:nowrap">15 мин</strong></li>
+        </ul>
+      </section>
+      <section style="background:#1B1E22;border:2px solid #1B1E22;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:14px;font-weight:700;color:#A3ABB3">Пятница</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Ноги</h2>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px">
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Приседания со штангой</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Румынская тяга</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Выпады с гантелями</span><strong style="white-space:nowrap">2 × 15</strong></li>
+          <li style="display:flex;justify-content:space-between;gap:12px"><span>Кардио: велотренажёр или быстрая ходьба</span><strong style="white-space:nowrap">15 мин</strong></li>
+        </ul>
+      </section>
+      <section style="background:#1B1E22;border:2px solid #1B1E22;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:14px;font-weight:700;color:#A3ABB3">Вт, Чт, Сб, Вс</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Отдых</h2>
+        <dl style="margin:0;display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:15px">
+          <dt style="color:#A3ABB3">Между подходами</dt><dd style="margin:0;font-weight:700">1:30</dd>
+          <dt style="color:#A3ABB3">После тренировки</dt><dd style="margin:0;font-weight:700">48 ч</dd>
+        </dl>
+      </section>
+    </div>
+    <div style="background:#262A2F;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5">Сменили уровень, дни или цель? Нажмите «Пересобрать план»: сам он не обновится.</div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

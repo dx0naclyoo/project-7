@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>UI-кит</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:#C8F04B}a:hover{color:#DDF78A}</style>
+</helmet>
+<div style="width:1280px;height:1120px;box-sizing:border-box;padding:56px;background:#111315;color:#F2F4F5;font-family:Manrope,system-ui,sans-serif;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <h1 style="margin:0;font-family:Unbounded,Manrope,sans-serif;font-size:40px;font-weight:700">Сделай себя лучше</h1>
+    <p style="margin:0;font-size:18px;color:#A3ABB3">Графит и один лаймовый акцент: как табло в зале. Лаймовым выделено только главное действие на экране.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Цвета</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:14px">
+        <div style="background:#111315;border:1px solid #3A4047;border-radius:12px;padding:14px">Фон<br>#111315</div>
+        <div style="background:#262A2F;border-radius:12px;padding:14px">Поверхность<br>#1B1E22, #262A2F</div>
+        <div style="background:#C8F04B;color:#111315;border-radius:12px;padding:14px;font-weight:700">Акцент<br>#C8F04B</div>
+        <div style="background:#F2F4F5;color:#111315;border-radius:12px;padding:14px">Текст<br>#F2F4F5</div>
+        <div style="background:#A3ABB3;color:#111315;border-radius:12px;padding:14px">Вторичный<br>#A3ABB3</div>
+        <div style="background:#FF9D8F;color:#111315;border-radius:12px;padding:14px">Ошибка<br>#FF9D8F</div>
+      </div>
+    </section>
+
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Шрифты</h2>
+      <div style="font-family:Unbounded,Manrope,sans-serif;font-size:32px;font-weight:700">Заголовок 32</div>
+      <div style="font-family:Unbounded,Manrope,sans-serif;font-size:56px;font-weight:700;color:#C8F04B;font-variant-numeric:tabular-nums">00:42:17</div>
+      <div style="font-size:16px">Основной текст Manrope 16. Цифры в таймере и калориях выводятся таким же крупным Unbounded.</div>
+    </section>
+
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Кнопки</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <button style="min-height:48px;padding:0 24px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 16px Manrope,sans-serif">Начать тренировку</button>
+        <button style="min-height:48px;padding:0 24px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Пересобрать план</button>
+        <button style="min-height:48px;padding:0 24px;border:1px solid #FF9D8F;border-radius:12px;background:transparent;color:#FF9D8F;font:700 16px Manrope,sans-serif">Удалить аккаунт</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <button disabled style="min-height:48px;padding:0 24px;border:0;border-radius:12px;background:#262A2F;color:#A3ABB3;font:700 16px Manrope,sans-serif">Недоступно</button>
+        <button style="min-height:48px;padding:0 24px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 16px Manrope,sans-serif;opacity:.75">Сохраняем…</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px" role="group" aria-label="Пример дней недели">
+        <button style="width:48px;height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Пн</button>
+        <button style="width:48px;height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Вт</button>
+        <button style="width:48px;height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Ср</button>
+      </div>
+    </section>
+
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Поля и подсказки</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Вес, кг
+          <input value="78.5" style="height:48px;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif">
+          <span style="font-weight:500;color:#A3ABB3">Нужен для подсчёта калорий</span>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Рост, см
+          <input value="90" style="height:48px;box-sizing:border-box;padding:0 14px;border:2px solid #FF9D8F;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif">
+          <span style="font-weight:500;color:#FF9D8F">Укажите рост от 101 до 220 см</span>
+        </label>
+      </div>
+      <div style="background:#262A2F;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5"><strong>Подсказка.</strong> Новичку хватит 2–3 дней в неделю, между тренировками лучше оставлять день отдыха.</div>
+    </section>
+
+    <section style="grid-column:1 / -1;background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Сообщения</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:15px">
+        <div style="background:#262A2F;border-radius:12px;padding:14px 16px"><strong>Сохранено</strong><br><span style="color:#A3ABB3">Параметры обновлены</span></div>
+        <div style="background:#262A2F;border-radius:12px;padding:14px 16px;color:#FF9D8F"><strong>Не удалось сохранить</strong><br>Проверьте связь и повторите</div>
+        <div style="background:#262A2F;border-radius:12px;padding:14px 16px"><strong>План устарел</strong><br><span style="color:#A3ABB3">Вы сменили дни. Пересоберите план</span></div>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1120}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
