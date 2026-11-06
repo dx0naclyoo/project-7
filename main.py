@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from src.goals.router import router as goals_router
 from src.parameters.router import router as parameters_router
@@ -18,3 +21,10 @@ app.include_router(trainings_days_router)
 app.include_router(workouts_router)
 app.include_router(training_plan_router)
 
+
+# Веб-клиент: http://localhost:8000/app/
+app.mount(
+    "/app",
+    StaticFiles(directory=Path(__file__).parent / "web", html=True),
+    name="web",
+)
