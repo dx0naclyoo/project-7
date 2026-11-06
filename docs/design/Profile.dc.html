@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Профиль</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:#F2F4F5}a:hover{color:#C8F04B}</style>
+</helmet>
+<div style="min-height:960px;background:#111315;color:#F2F4F5;font-family:Manrope,system-ui,sans-serif">
+  <header style="max-width:1120px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+    <div style="font-family:Unbounded,Manrope,sans-serif;font-weight:700;font-size:16px">Сделай себя лучше</div>
+    <nav style="display:flex;gap:8px;font-weight:700;font-size:15px">
+      <a href="Today.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">Сегодня</a>
+      <a href="Plan.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">План</a>
+      <a href="Profile.dc.html" style="padding:12px 16px;border-radius:12px;background:#262A2F;text-decoration:none">Профиль</a>
+    </nav>
+  </header>
+  <main style="max-width:1120px;margin:0 auto;padding:16px 24px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px">
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Параметры</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px" role="group" aria-label="Пол">
+        <button style="min-height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 16px Manrope,sans-serif">Мужской</button>
+        <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Женский</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Возраст<input value="24" style="height:48px;width:100%;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif"></label>
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Вес, кг<input value="78.5" style="height:48px;width:100%;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif"></label>
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Рост, см<input value="180" style="height:48px;width:100%;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif"></label>
+      </div>
+      <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Сохранить</button>
+    </section>
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Цель</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px" role="group" aria-label="Цель">
+        <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Набрать массу</button>
+        <button style="min-height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 16px Manrope,sans-serif">Сбросить вес</button>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Желаемый вес, кг<input value="72" style="height:48px;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif"></label>
+      <button style="min-height:48px;margin-top:auto;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Сохранить</button>
+    </section>
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Уровень и дни</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px" role="group" aria-label="Уровень">
+        <button style="min-height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Начальный</button>
+        <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Средний</button>
+        <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Сложный</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px" role="group" aria-label="Дни тренировок">
+        <button style="width:48px;height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Пн</button>
+        <button style="width:48px;height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Вт</button>
+        <button style="width:48px;height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Ср</button>
+        <button style="width:48px;height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Чт</button>
+        <button style="width:48px;height:48px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 15px Manrope,sans-serif">Пт</button>
+        <button style="width:48px;height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Сб</button>
+        <button style="width:48px;height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 15px Manrope,sans-serif">Вс</button>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700">Отдых между подходами, мин:сек
+        <input value="1:30" style="height:48px;box-sizing:border-box;padding:0 14px;border:1px solid #5A626B;border-radius:12px;background:#111315;color:#F2F4F5;font:500 16px Manrope,sans-serif">
+        <span style="font-weight:500;color:#A3ABB3">Этот отсчёт запускает кнопка «Стоп» после подхода</span>
+      </label>
+      <button style="min-height:48px;margin-top:auto;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Сохранить</button>
+    </section>
+    <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Аккаунт</h2>
+      <p style="margin:0;font-size:15px;line-height:1.5;color:#A3ABB3">Удаление нельзя отменить: пропадут параметры, цель, план и тренировки.</p>
+      <button style="min-height:48px;margin-top:auto;border:1px solid #FF9D8F;border-radius:12px;background:transparent;color:#FF9D8F;font:700 16px Manrope,sans-serif">Удалить аккаунт</button>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

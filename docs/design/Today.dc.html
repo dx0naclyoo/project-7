@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сегодня</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:#F2F4F5}a:hover{color:#C8F04B}</style>
+</helmet>
+<div style="min-height:860px;background:#111315;color:#F2F4F5;font-family:Manrope,system-ui,sans-serif">
+  <header style="max-width:1120px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+    <div style="font-family:Unbounded,Manrope,sans-serif;font-weight:700;font-size:16px">Сделай себя лучше</div>
+    <nav style="display:flex;gap:8px;font-weight:700;font-size:15px">
+      <a href="Today.dc.html" style="padding:12px 16px;border-radius:12px;background:#262A2F;text-decoration:none">Сегодня</a>
+      <a href="Plan.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">План</a>
+      <a href="Profile.dc.html" style="padding:12px 16px;border-radius:12px;text-decoration:none">Профиль</a>
+    </nav>
+  </header>
+  <main style="max-width:1120px;margin:0 auto;padding:16px 24px 48px;display:flex;flex-wrap:wrap;gap:24px">
+    <section style="flex:999 1 560px;min-width:0;background:#1B1E22;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:24px">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#A3ABB3">Понедельник</div>
+        <h1 style="margin:8px 0 0;font-family:Unbounded,Manrope,sans-serif;font-size:36px;font-weight:700">Грудь, плечи, трицепс</h1>
+      </div>
+      <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:16px">
+        <li style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid #3A4047"><span>Жим штанги лёжа</span><strong>2 × 15</strong></li>
+        <li style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid #3A4047"><span>Жим гантелей сидя</span><strong>2 × 15</strong></li>
+        <li style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid #3A4047"><span>Отжимания на брусьях</span><strong>2 × 15</strong></li>
+        <li style="display:flex;justify-content:space-between;gap:16px;padding:16px 0"><span>Кардио: велотренажёр или быстрая ходьба</span><strong style="white-space:nowrap">15 мин</strong></li>
+      </ol>
+      <a href="Workout.dc.html" style="min-height:56px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#C8F04B;color:#111315;font:800 18px Manrope,sans-serif;text-decoration:none">Начать тренировку</a>
+    </section>
+    <aside style="flex:1 1 280px;display:flex;flex-direction:column;gap:24px">
+      <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:14px">
+        <h2 style="margin:0;font-size:18px;font-weight:800">Неделя</h2>
+        <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;font-size:13px;font-weight:700;text-align:center">
+          <div style="padding:10px 0;border-radius:8px;background:#C8F04B;color:#111315">Пн</div>
+          <div style="padding:10px 0;color:#A3ABB3">Вт</div>
+          <div style="padding:10px 0;border-radius:8px;background:#262A2F">Ср</div>
+          <div style="padding:10px 0;color:#A3ABB3">Чт</div>
+          <div style="padding:10px 0;border-radius:8px;background:#262A2F">Пт</div>
+          <div style="padding:10px 0;color:#A3ABB3">Сб</div>
+          <div style="padding:10px 0;color:#A3ABB3">Вс</div>
+        </div>
+      </section>
+      <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:10px">
+        <h2 style="margin:0;font-size:18px;font-weight:800">Цель</h2>
+        <div style="font-family:Unbounded,Manrope,sans-serif;font-size:32px;font-weight:700">72 кг</div>
+        <div style="font-size:15px;color:#A3ABB3">Сбросить вес, сейчас 78.5 кг</div>
+      </section>
+      <section style="background:#1B1E22;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:14px">
+        <h2 style="margin:0;font-size:18px;font-weight:800">Отдых</h2>
+        <dl style="margin:0;display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:15px">
+          <dt style="color:#A3ABB3">Между подходами</dt><dd style="margin:0;font-weight:700">1:30</dd>
+          <dt style="color:#A3ABB3">После тренировки</dt><dd style="margin:0;font-weight:700">48 ч</dd>
+        </dl>
+      </section>
+      <div style="background:#262A2F;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5">Калории посчитаем сами, когда вы завершите тренировку.</div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

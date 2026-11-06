@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Тренировка и итог</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:#F2F4F5}a:hover{color:#C8F04B}</style>
+</helmet>
+<div style="min-height:1100px;background:#111315;color:#F2F4F5;font-family:Manrope,system-ui,sans-serif">
+  <main style="max-width:1120px;margin:0 auto;padding:48px 24px;display:flex;flex-wrap:wrap;gap:24px">
+    <div style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:24px">
+    <section style="background:#1B1E22;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:24px">
+      <div style="text-align:center">
+        <div style="font-size:15px;font-weight:700;color:#A3ABB3">Идёт тренировка</div>
+        <div style="margin-top:8px;font-family:Unbounded,Manrope,sans-serif;font-size:64px;font-weight:700;color:#C8F04B;font-variant-numeric:tabular-nums">00:42:00</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:16px">
+        <label style="min-height:48px;display:flex;align-items:center;gap:12px;color:#A3ABB3"><input type="checkbox" checked style="width:24px;height:24px;accent-color:#C8F04B"><span style="flex:1;text-decoration:line-through">Жим штанги лёжа</span><strong>2 × 15</strong></label>
+        <label style="min-height:48px;display:flex;align-items:center;gap:12px;color:#A3ABB3"><input type="checkbox" checked style="width:24px;height:24px;accent-color:#C8F04B"><span style="flex:1;text-decoration:line-through">Жим гантелей сидя</span><strong>2 × 15</strong></label>
+        <label style="min-height:48px;display:flex;align-items:center;gap:12px"><input type="checkbox" style="width:24px;height:24px;accent-color:#C8F04B"><span style="flex:1">Отжимания на брусьях</span><strong>2 × 15</strong></label>
+        <label style="min-height:48px;display:flex;align-items:center;gap:12px"><input type="checkbox" style="width:24px;height:24px;accent-color:#C8F04B"><span style="flex:1">Кардио: велотренажёр или быстрая ходьба</span><strong style="white-space:nowrap">15 мин</strong></label>
+      </div>
+      <button style="min-height:48px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Завершить тренировку</button>
+      <p style="margin:0;font-size:14px;color:#A3ABB3;text-align:center">Страницу можно закрыть: время идёт на сервере</p>
+    </section>
+
+    <section style="background:#1B1E22;border-radius:16px;padding:28px 36px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
+      <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:14px;font-weight:700;color:#A3ABB3">Идёт подход 1 из 2</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Отжимания на брусьях</h2>
+        <p style="margin:0;font-size:15px;color:#A3ABB3">Закончили подход? Нажмите «Стоп», и начнётся отдых.</p>
+      </div>
+      <button style="flex:0 1 200px;min-height:56px;border:0;border-radius:12px;background:#C8F04B;color:#111315;font:800 18px Manrope,sans-serif">Стоп</button>
+    </section>
+
+    <section style="background:#1B1E22;border-radius:16px;padding:28px 36px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:14px;font-weight:700;color:#A3ABB3">После нажатия «Стоп»</div>
+        <h2 style="margin:0;font-size:20px;font-weight:800">Отдых</h2>
+        <p style="margin:0;font-size:15px;color:#A3ABB3">Дальше: подход 2 из 2</p>
+      </div>
+      <div style="font-family:Unbounded,Manrope,sans-serif;font-size:44px;font-weight:700;font-variant-numeric:tabular-nums">01:30</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <button style="min-height:48px;padding:0 16px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">−15 с</button>
+        <button style="min-height:48px;padding:0 16px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">+15 с</button>
+        <button style="min-height:48px;padding:0 16px;border:1px solid #5A626B;border-radius:12px;background:transparent;color:#F2F4F5;font:700 16px Manrope,sans-serif">Пропустить</button>
+      </div>
+    </section>
+    </div>
+
+    <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:24px">
+    <section style="background:#1B1E22;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:20px">
+      <h2 style="margin:0;font-family:Unbounded,Manrope,sans-serif;font-size:24px;font-weight:700">Готово!</h2>
+      <div>
+        <div style="font-family:Unbounded,Manrope,sans-serif;font-size:56px;font-weight:700;color:#C8F04B">192</div>
+        <div style="font-size:15px;color:#A3ABB3">ккал сожжено</div>
+      </div>
+      <dl style="margin:0;display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:15px">
+        <dt style="color:#A3ABB3">Длительность</dt><dd style="margin:0;font-weight:700">42 мин</dd>
+        <dt style="color:#A3ABB3">Вес</dt><dd style="margin:0;font-weight:700">78.5 кг</dd>
+        <dt style="color:#A3ABB3">Интенсивность, MET</dt><dd style="margin:0;font-weight:700">3.5</dd>
+      </dl>
+      <div style="background:#262A2F;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5">Считаем так: MET × вес × часы. Это оценка, а не точное измерение.</div>
+    </section>
+    <section style="background:#1B1E22;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:20px;font-weight:800">Восстановление</h2>
+      <div style="font-family:Unbounded,Manrope,sans-serif;font-size:32px;font-weight:700">48 ч</div>
+      <p style="margin:0;font-size:15px;line-height:1.5;color:#A3ABB3">Следующая тренировка в среду: спина и бицепс.</p>
+    </section>
+    <a href="Today.dc.html" style="min-height:48px;display:flex;align-items:center;justify-content:center;border:1px solid #5A626B;border-radius:12px;font:700 16px Manrope,sans-serif;text-decoration:none">На главную</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
