@@ -31,7 +31,7 @@ async def create_user(data: UserCreate, conn: Connection) -> UserResponse:
 
 @router.post("/login", response_model=SessionResponse)
 async def login(data: UserLogin, conn: Connection) -> SessionResponse:
-    """Вход по имени и паролю. Токен живёт 2 часа (SESSION_TTL)."""
+    """Вход по имени и паролю. Токен живёт 30 дней (SESSION_TTL)."""
     return await UserService(conn).login(data)
 
 

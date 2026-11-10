@@ -98,5 +98,6 @@ DEFAULT_REPS = 12
 
 CARDIO_NAME = "Кардио: велотренажёр или быстрая ходьба"
 
-# Сессия входа: сколько живёт токен после login
-SESSION_TTL = timedelta(hours=2)
+# Сколько живёт токен входа. UserService.login (src/users/service.py)
+# прибавляет его к текущему времени и записывает в sessions.expires_at
+SESSION_TTL = timedelta(days=30)

@@ -44,10 +44,9 @@ router вызывает service, service вызывает repository, repository
 ## Вход и выход
 
 - `POST /users/` создаёт пользователя по имени и паролю (имя уникально, иначе 409).
-- `POST /users/login` проверяет пароль и выдаёт токен сессии на 2 часа (`SESSION_TTL` в `settings.py`).
+- `POST /users/login` проверяет пароль и выдаёт токен сессии на 30 дней (`SESSION_TTL` в `settings.py`).
 - `POST /users/logout` закрывает сессию, `GET /users/me` возвращает вошедшего пользователя.
   Обе ручки ждут заголовок `Authorization: Bearer <token>`, без живой сессии отвечают 401.
 
 Пароль хранится хэшем scrypt (`src/users/security.py`), сессии лежат в таблице `sessions`.
 Клиент пока держит токен, id пользователя и идущую тренировку в `localStorage`.
-Остальные ручки токен ещё не проверяют, это следующий шаг.

@@ -35,7 +35,7 @@ const GOALS = {
 };
 
 // ---------- Хранилище браузера ----------
-// Сессия входа (токен на 2 часа), id пользователя и идущая тренировка живут здесь.
+// Сессия входа (токен на 30 дней), id пользователя и идущая тренировка живут здесь.
 
 const store = {
   get(key) {
@@ -128,7 +128,7 @@ async function api(method, path, body) {
   const data = await response.json().catch(() => ({}));
   const error = new ApiError(response.status, data.detail);
   if (response.status === 401 && session && path !== "/users/logout") {
-    // Сессия истекла (2 часа) или её закрыли: просим войти снова
+    // Сессия истекла или её закрыли: просим войти снова
     error.handled = true;
     forgetUser();
     toast("Сессия истекла, войдите снова");
@@ -868,7 +868,7 @@ async function pageProfile(alive) {
       </form>
       <section class="card" id="account">
         <h2 class="subtitle">Аккаунт</h2>
-        <p class="muted">Вход действует 2 часа, потом нужно войти снова.</p>
+        <p class="muted">Вход действует 30 дней, потом нужно войти снова.</p>
         <button class="btn" id="logout">Выйти</button>
         <p class="muted">Удаление нельзя отменить: пропадут параметры, цель, план и тренировки.</p>
         <button class="btn btn--danger push-down" id="delete">Удалить аккаунт</button>
