@@ -1,5 +1,6 @@
 // Веб-клиент "Сделай себя лучше". Без сборки: index.html + styles.css + этот модуль.
-// Экраны переключаются по хэшу: #/today, #/plan, #/workout, #/result/<id>, #/profile, #/onboarding.
+// Экраны переключаются по хэшу: #/today, #/plan, #/workout, #/result/<id>, #/profile,
+// #/onboarding, #/login.
 
 const app = document.getElementById("app");
 const topbar = document.getElementById("topbar");
@@ -34,7 +35,7 @@ const GOALS = {
 };
 
 // ---------- Хранилище браузера ----------
-// Ручки входа в API нет, поэтому id пользователя и идущая тренировка живут здесь.
+// Сессия входа (токен на 2 часа), id пользователя и идущая тренировка живут здесь.
 
 const store = {
   get(key) {
@@ -60,18 +61,40 @@ const store = {
   },
 };
 
-let userId = store.get("userId");
+let session = store.get("session"); // { token, expiresAt, userId }
+let userId = session?.userId ?? null;
 
-function saveUser(id) {
-  userId = id;
-  store.set("userId", id);
+function saveSession(data) {
+  session = { token: data.token, expiresAt: data.expires_at, userId: data.user.id };
+  userId = session.userId;
+  store.set("session", session);
+}
+
+function sessionExpired() {
+  return !session || new Date(session.expiresAt).getTime() <= Date.now();
 }
 
 function forgetUser() {
+  session = null;
   userId = null;
   draft = emptyDraft();
   step = 1;
-  ["userId", "activeWorkout", "planStale"].forEach((key) => store.remove(key));
+  ["session", "userId", "activeWorkout", "planStale"].forEach((key) => store.remove(key));
+}
+
+// Вход по имени и паролю. Ошибка 401: неверное имя или пароль.
+async function login(username, password) {
+  saveSession(await api("POST", "/users/login", { username, password }));
+}
+
+async function logout() {
+  try {
+    await api("POST", "/users/logout");
+  } catch {
+    // сессия уже недействительна или нет связи: локально всё равно выходим
+  }
+  forgetUser();
+  location.hash = "#/login";
 }
 
 // ---------- API ----------
@@ -88,9 +111,12 @@ class ApiError extends Error {
 async function api(method, path, body) {
   let response;
   try {
+    const headers = {};
+    if (body) headers["Content-Type"] = "application/json";
+    if (session) headers.Authorization = `Bearer ${session.token}`;
     response = await fetch(path, {
       method,
-      headers: body ? { "Content-Type": "application/json" } : undefined,
+      headers,
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch {
@@ -101,7 +127,13 @@ async function api(method, path, body) {
   }
   const data = await response.json().catch(() => ({}));
   const error = new ApiError(response.status, data.detail);
-  if (response.status === 404 && data.detail === "User not found") {
+  if (response.status === 401 && session && path !== "/users/logout") {
+    // Сессия истекла (2 часа) или её закрыли: просим войти снова
+    error.handled = true;
+    forgetUser();
+    toast("Сессия истекла, войдите снова");
+    location.hash = "#/login";
+  } else if (response.status === 404 && data.detail === "User not found") {
     // Пользователя удалили, а браузер ещё помнит его id: начинаем заново
     error.handled = true;
     forgetUser();
@@ -351,7 +383,7 @@ function showErrors(root, errors) {
 // ---------- Анкета ----------
 
 function emptyDraft() {
-  return { username: "", gender: null, age: "", weight: "", height: "", goal_type: null, target_weight: "", level: null, days: [] };
+  return { username: "", password: "", gender: null, age: "", weight: "", height: "", goal_type: null, target_weight: "", level: null, days: [] };
 }
 
 let draft = emptyDraft();
@@ -367,7 +399,9 @@ function pageOnboarding() {
       title: "Сделай себя лучше",
       body: `
         <p class="muted">План тренировок под вашу цель и удобные дни. Анкета займёт пару минут.</p>
-        ${field("username", "Как вас зовут?", draft.username, "До 18 символов", "text")}`,
+        ${field("username", "Как вас зовут?", draft.username, "До 18 символов, по имени вы будете входить", "text")}
+        ${passwordField("password", "Придумайте пароль", draft.password, "От 6 символов", "new-password")}
+        <p class="muted">Уже есть аккаунт? <a href="#/login">Войти</a></p>`,
     },
     2: {
       title: "О вас",
@@ -401,8 +435,12 @@ function pageOnboarding() {
   function collect() {
     if (step === 1) {
       const username = readInput(form, "username");
-      draft.username = username;
-      return !username || username.length > 18 ? { username: "Имя от 1 до 18 символов" } : {};
+      const password = form.querySelector('[name="password"]').value;
+      Object.assign(draft, { username, password });
+      const errors = {};
+      if (!username || username.length > 18) errors.username = "Имя от 1 до 18 символов";
+      if (password.length < 6 || password.length > 72) errors.password = "Пароль от 6 до 72 символов";
+      return errors;
     }
     const raw = step === 2 ? readParams(form) : step === 3 ? readGoal(form) : readSettings(form);
     Object.assign(draft, raw.values);
@@ -435,6 +473,13 @@ function pageOnboarding() {
         pageOnboarding();
         return;
       }
+      if (error.status === 409) {
+        // имя занято другим аккаунтом: возвращаем на первый шаг
+        step = 1;
+        pageOnboarding();
+        showErrors(document.getElementById("onboarding"), { username: "Это имя уже занято" });
+        return;
+      }
       errorEl.textContent = errorText(error);
       errorEl.hidden = false;
     }
@@ -442,10 +487,22 @@ function pageOnboarding() {
 }
 
 async function submitOnboarding() {
-  // id сохраняем сразу: при повторе после сбоя второй аккаунт не появится
+  // Сессию сохраняем сразу: при повторе после сбоя второй аккаунт не появится
   if (!userId) {
-    const user = await api("POST", "/users/", { username: draft.username });
-    saveUser(user.id);
+    const { username, password } = draft;
+    try {
+      await api("POST", "/users/", { username, password });
+    } catch (error) {
+      // 409: аккаунт мог создаться в прошлой попытке, пробуем войти с тем же паролем
+      if (error.status !== 409) throw error;
+      try {
+        await login(username, password);
+      } catch {
+        throw error;
+      }
+    }
+    if (!userId) await login(username, password);
+    draft.password = "";
   }
   const { gender, age, weight, height, goal_type, target_weight, level, days } = draft;
   await api("POST", "/users/parameters/", { user_id: userId, gender, age, weight, height });
@@ -453,6 +510,50 @@ async function submitOnboarding() {
   await api("POST", "/users/training-settings/", { user_id: userId, level, days });
   await api("POST", `/users/training-plan/${userId}/regenerate`);
   store.remove("planStale");
+}
+
+// ---------- Вход ----------
+
+function passwordField(name, label, value, hint, autocomplete) {
+  return `
+    <label class="field" data-field="${name}">${esc(label)}
+      <input name="${name}" type="password" value="${esc(value)}" autocomplete="${autocomplete}">
+      ${hint ? `<span class="field__hint">${esc(hint)}</span>` : ""}
+      <span class="field__error" data-error="${name}" hidden></span>
+    </label>`;
+}
+
+function pageLogin() {
+  app.innerHTML = `
+    <form class="card narrow" id="login" novalidate>
+      <h1 class="title">Вход</h1>
+      ${field("username", "Имя", "", "", "text")}
+      ${passwordField("password", "Пароль", "", "", "current-password")}
+      <p class="error" id="form-error" hidden></p>
+      <button class="btn btn--primary push-down" id="login-submit">Войти</button>
+      <p class="muted">Нет аккаунта? <a href="#/onboarding">Заполнить анкету</a></p>
+    </form>`;
+
+  const form = document.getElementById("login");
+  form.querySelector('[name="username"]').autocomplete = "username";
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const username = readInput(form, "username");
+    const password = form.querySelector('[name="password"]').value;
+    const errors = {};
+    if (!username) errors.username = "Введите имя";
+    if (!password) errors.password = "Введите пароль";
+    if (!showErrors(form, errors)) return;
+    const errorEl = document.getElementById("form-error");
+    errorEl.hidden = true;
+    try {
+      await withBusy(document.getElementById("login-submit"), "Входим…", () => login(username, password));
+      location.hash = "#/today";
+    } catch (error) {
+      errorEl.textContent = error.status === 401 ? "Неверное имя или пароль" : errorText(error);
+      errorEl.hidden = false;
+    }
+  });
 }
 
 // ---------- Сегодня ----------
@@ -767,6 +868,8 @@ async function pageProfile(alive) {
       </form>
       <section class="card" id="account">
         <h2 class="subtitle">Аккаунт</h2>
+        <p class="muted">Вход действует 2 часа, потом нужно войти снова.</p>
+        <button class="btn" id="logout">Выйти</button>
         <p class="muted">Удаление нельзя отменить: пропадут параметры, цель, план и тренировки.</p>
         <button class="btn btn--danger push-down" id="delete">Удалить аккаунт</button>
       </section>
@@ -776,6 +879,9 @@ async function pageProfile(alive) {
   bindSave("form-goal", readGoal, "/users/goals/", true);
   bindSave("form-settings", readSettings, "/users/training-settings/", true);
   document.getElementById("delete").addEventListener("click", confirmDelete);
+  document.getElementById("logout").addEventListener("click", (event) =>
+    withBusy(event.currentTarget, "Выходим…", logout),
+  );
 }
 
 function bindSave(formId, read, path, affectsPlan) {
@@ -833,8 +939,20 @@ function route() {
   const alive = () => token === routeToken;
   const [name, param] = location.hash.replace(/^#\//, "").split("/");
 
-  if (!userId && name !== "onboarding") {
+  if (session && sessionExpired()) {
+    forgetUser();
+    toast("Сессия истекла, войдите снова");
+    if (name !== "login") {
+      location.hash = "#/login";
+      return;
+    }
+  }
+  if (!userId && name !== "onboarding" && name !== "login") {
     location.hash = "#/onboarding";
+    return;
+  }
+  if (userId && name === "login") {
+    location.hash = "#/today";
     return;
   }
   const target = name || "today";
@@ -847,6 +965,7 @@ function route() {
   window.scrollTo(0, 0);
 
   if (target === "onboarding") pageOnboarding();
+  else if (target === "login") pageLogin();
   else if (target === "today") pageToday(alive);
   else if (target === "plan") pagePlan(alive);
   else if (target === "workout") pageWorkout();
