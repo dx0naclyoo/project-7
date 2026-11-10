@@ -1,3 +1,4 @@
+import asyncio
 from datetime import UTC, datetime
 
 import asyncpg
@@ -6,7 +7,7 @@ from fastapi import HTTPException
 from settings import SESSION_TTL
 from src.users.repository import SessionRepository, UserRepository
 from src.users.schemas import SessionResponse, UserCreate, UserLogin, UserResponse
-from src.users.security import hash_password, new_token, verify_password
+from src.users.security import DUMMY_HASH, hash_password, new_token, verify_password
 
 
 class UserService:
@@ -15,8 +16,10 @@ class UserService:
         self.sessions = SessionRepository(conn)
 
     async def create(self, data: UserCreate) -> UserResponse:
+        # scrypt считается ~50 мс: в отдельном потоке, чтобы не стопорить остальные запросы
+        password_hash = await asyncio.to_thread(hash_password, data.password)
         try:
-            user = await self.repo.create(data.username, hash_password(data.password))
+            user = await self.repo.create(data.username, password_hash)
         except asyncpg.UniqueViolationError:
             raise HTTPException(status_code=409, detail="Username already taken")
         if user is None:
@@ -29,8 +32,11 @@ class UserService:
 
     async def login(self, data: UserLogin) -> SessionResponse:
         found = await self.repo.get_credentials(data.username)
-        # одна ошибка на "нет пользователя" и "неверный пароль": не подсказываем, что есть
-        if found is None or not verify_password(data.password, found[1]):
+        # Пароль проверяем и когда пользователя нет (с DUMMY_HASH): иначе по времени
+        # ответа видно, есть ли такое имя. Ошибка в обоих случаях одна и та же.
+        stored = found[1] if found else DUMMY_HASH
+        valid = await asyncio.to_thread(verify_password, data.password, stored)
+        if found is None or not valid:
             raise HTTPException(status_code=401, detail="Invalid username or password")
         user = found[0]
         token = new_token()

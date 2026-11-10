@@ -25,3 +25,8 @@ def verify_password(password: str, stored: str) -> bool:
 
 def new_token() -> str:
     return secrets.token_urlsafe(32)
+
+
+# Хэш случайного пароля: проверяем его, когда пользователя нет,
+# чтобы такой ответ шёл столько же, сколько ответ на неверный пароль
+DUMMY_HASH = hash_password(secrets.token_urlsafe(16))
