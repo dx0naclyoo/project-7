@@ -1,5 +1,7 @@
 """Общие константы проекта."""
 
+from datetime import timedelta
+
 # Колонки таблицы workouts, которые возвращают запросы репозитория
 WORKOUT_COLUMNS = "id, user_id, started_at, ended_at, calories"
 
@@ -95,3 +97,7 @@ REPS_BY_GOAL: dict[str, int] = {
 DEFAULT_REPS = 12
 
 CARDIO_NAME = "Кардио: велотренажёр или быстрая ходьба"
+
+# Сколько живёт токен входа. UserService.login (src/users/service.py)
+# прибавляет его к текущему времени и записывает в sessions.expires_at
+SESSION_TTL = timedelta(days=30)
